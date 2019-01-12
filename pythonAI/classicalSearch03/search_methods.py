@@ -21,10 +21,12 @@ def astar_search(problem):
         node = frontier.get()[1]
         if problem.goal_test(node.state):
             return node
+        print(node.state)
         explored.add(node.state)
         new_states = problem.expand_node(node.state)
         for state in new_states:
             childNode = node.get_child_node(problem, state)
+            print(childNode)
             childNode_path_cost = childNode.path_cost + problem.get_astar_heuristic_cost(childNode)
             if childNode.state not in explored and childNode.state not in list(frontier.queue):
                 frontier.put((childNode_path_cost, childNode))
