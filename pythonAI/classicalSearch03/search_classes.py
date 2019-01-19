@@ -6,7 +6,6 @@ Created on Sun Dec 23 15:41:43 2018
 @author: djesse
 """
 
-from queue import Queue
 
 class Node(object):
     '''
@@ -19,22 +18,29 @@ class Node(object):
     depth = 0
     
     def __init__(self, problem, parent = None, action = None):
+        
         self.parent = parent
-        self.action = action
         if parent:
             self.depth = parent.depth + 1
             self.state = problem.get_result(parent.state, action)
             self.path_cost = parent.path_cost + problem.get_step_cost(parent.state, action)
+            self.action = action
         else:
             self.state = action
+            self.action = None
             
     def __str__ (self):
         rep = "<Node\n"
         rep += "\t State: " + str(self.state) + "\n"
         rep += "\tPath Cost: " + str(self.path_cost) + "\n"
         rep += "\tParent: " + str(self.parent.state) if self.parent else "" + "\n"
+        rep += "\tAction: " + str(self.action) if self.action else "" + "\n"
         rep += ">"
         return rep
+
+    #needed for comparisons
+    def __lt__(self, other):
+        return self.path_cost < other.path_cost
     
     def get_child_node(self, problem, action):
         return Node(problem, self, action)
@@ -142,31 +148,27 @@ class EightPuzzleProblem(object):
         return rep
     
     def expand_node(self, nodeState):
-        new_states = []
+        new_actions = []
         #find the blank spot and see which possible
-        #new states are available
+        #actions are available
         for rowIndex in range(0,3):
             for colIndex in range(0,3):
                 elem = nodeState[rowIndex][colIndex]
                 if elem == 0:
                     #figure out which moves are possible
-                    #top slot available
+                    #can move a tile up
+                    if rowIndex < 2:
+                        new_actions.append('U')
+                    #can move a tile down
                     if rowIndex > 0:
-                        topBranch = self.get_result(nodeState, 'U')
-                        new_states.append(topBranch)
-                    #bottom slot available
-                    if rowIndex < 2:
-                        bottomBranch = self.get_result(nodeState, 'D')
-                        new_states.append(bottomBranch)
-                    #left slot available
+                        new_actions.append('D')
+                    #can move a tile left
+                    if colIndex < 2:
+                        new_actions.append('L')
+                    #can move a tile right
                     if colIndex > 0:
-                        leftBranch = self.get_result(nodeState, 'L')
-                        new_states.append(leftBranch)
-                    #right slot available
-                    if rowIndex < 2:
-                        rightBranch = self.get_result(nodeState, 'R')
-                        new_states.append(rightBranch)
-        return new_states
+                        new_actions.append('R')
+        return new_actions
     
     def get_result(self, state, action):
         #actions = U/D/L/R
@@ -175,32 +177,32 @@ class EightPuzzleProblem(object):
                elem = state[rowIndex][colIndex]
                if elem == 0:
                    if action == 'U':
-                       temp = state[rowIndex - 1][colIndex]
+                       temp = state[rowIndex + 1][colIndex]
                        topBranch = [list(item) for item in state]
                        topBranch[rowIndex][colIndex] = temp
-                       topBranch[rowIndex - 1][colIndex] = 0
-                       return tuple(topBranch)
+                       topBranch[rowIndex + 1][colIndex] = 0
+                       return tuple(tuple(item) for item in topBranch)
                    #bottom slot available
                    elif action == 'D':
-                       temp = state[rowIndex + 1][colIndex]
+                       temp = state[rowIndex - 1][colIndex]
                        bottomBranch = [list(item) for item in state]
                        bottomBranch[rowIndex][colIndex] = temp
-                       bottomBranch[rowIndex + 1][colIndex] = 0
-                       return tuple(bottomBranch)
+                       bottomBranch[rowIndex - 1][colIndex] = 0
+                       return tuple(tuple(item) for item in bottomBranch)
                    #left slot available
                    elif action == 'L':
-                       temp = state[rowIndex][colIndex - 1]
+                       temp = state[rowIndex][colIndex + 1]
                        leftBranch = [list(item) for item in state]
                        leftBranch[rowIndex][colIndex] = temp
-                       leftBranch[rowIndex][colIndex - 1] = 0
-                       return tuple(leftBranch)
+                       leftBranch[rowIndex][colIndex + 1] = 0
+                       return tuple(tuple(item) for item in leftBranch)
                    #right slot available
                    elif action == 'R':
-                       temp = state[rowIndex][colIndex + 1]
+                       temp = state[rowIndex][colIndex - 1]
                        rightBranch = [list(item) for item in state]
                        rightBranch[rowIndex][colIndex] = temp
-                       rightBranch[rowIndex][colIndex + 1] = 0
-                       return tuple(rightBranch)
+                       rightBranch[rowIndex][colIndex - 1] = 0
+                       return tuple(tuple(item) for item in rightBranch)
                    else:
                        return None
     
