@@ -7,6 +7,10 @@ Created on Sun Dec 23 14:16:04 2018
 
 Chapter 2 of the book; evaluates dfferent models
 
+p. 33
+
+K Nearest Neighbors, Regression
+
 """
 
 import mglearn
@@ -35,3 +39,11 @@ for n, ax in zip([1,3,9], axes):
     ax.set_ylabel("Target")
     axes[0].legend(["Model Prediction", "Training Data/Target", "Test Data/Target"], loc="best")
     
+
+#boston data
+from sklearn.datasets import load_boston
+
+boston = load_boston()
+print("Shape: " , boston.data.shape)
+Xc, yc = mglearn.datasets.load_extended_boston()
+print(Xc.shape)

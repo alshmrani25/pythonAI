@@ -44,6 +44,7 @@ class Node(object):
     
     def get_child_node(self, problem, action):
         return Node(problem, self, action)
+    
 
 class GraphProblem(object):
     '''
