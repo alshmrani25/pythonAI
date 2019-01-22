@@ -8,8 +8,8 @@ Created on Sun Dec 23 15:42:28 2018
 
 from search_classes import GraphProblem
 from search_classes import EightPuzzleProblem
-from search_methods import astar_search
-from search_methods import get_solution_path
+from search_functions import astar_search
+from search_functions import get_solution_path
   
 wGraph = GraphProblem("romania_map.txt", "Arad", "Bucharest")
 #print(wGraph)

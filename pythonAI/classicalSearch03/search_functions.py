@@ -47,5 +47,5 @@ def get_solution_path(finalNode):
             return path
 
 if __name__ == "__main__":
-    print("This is a module for searching methods.")
+    print("This is a module for searching functions.")
     input("\n\nPlease press Enter to exit.")

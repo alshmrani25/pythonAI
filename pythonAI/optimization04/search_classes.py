@@ -6,6 +6,8 @@ Created on Sun Dec 23 15:41:43 2018
 @author: djesse
 """
 
+from random import shuffle
+
 
 class Node(object):
     '''
@@ -13,37 +15,27 @@ class Node(object):
     '''   
     state = None
     parent = None
-    action = None
     path_cost = 0
-    depth = 0
     
-    def __init__(self, problem, parent = None, action = None):
+    def __init__(self, problem, state, parent = None):
         
-        self.parent = parent
         if parent:
-            self.depth = parent.depth + 1
-            self.state = problem.get_result(parent.state, action)
-            self.path_cost = parent.path_cost + problem.get_step_cost(parent.state, action)
-            self.action = action
+            self.state = state
+            self.path_cost = parent.path_cost + problem.get_step_cost()
         else:
-            self.state = action
-            self.action = None
+            self.state = state
+            self.path_cost = 0
             
     def __str__ (self):
         rep = "<Node\n"
         rep += "\t State: " + str(self.state) + "\n"
         rep += "\tPath Cost: " + str(self.path_cost) + "\n"
-        rep += "\tParent: " + str(self.parent.state) if self.parent else "" + "\n"
-        rep += "\tAction: " + str(self.action) if self.action else "" + "\n"
         rep += ">"
         return rep
 
     #needed for comparisons
     def __lt__(self, other):
         return self.path_cost < other.path_cost
-    
-    def get_child_node(self, problem, action):
-        return Node(problem, self, action)
     
     
     
@@ -63,43 +55,85 @@ class EightQueensProblem(object):
     def __init__(self):
         #the initial state is a setup where each column has a queen
         #placed in a random row; use a random placement of 1-8
+        random_initial_state = [1,2,3,4,5,6,7,8]
+        shuffle(random_initial_state)
         
-        
-        
+        #temporary
+        random_initial_state = [8, 2, 4, 5, 1, 3, 6, 7]
         
         self.initial_state = random_initial_state
-        self.initial_node = Node(self, None, initial_state)
+        self.initial_node = Node(self, self.initial_state, None)
         
     def __str__(self):
         rep = "<EightQueensProblem\n"
         rep += "\tInitial State: " + str(self.initial_state) + "\n>"
         return rep
     
-    def expand_node(self, nodeState):
-        new_actions = []
+    def get_successors(self, node):
+        successor_nodes = []
+        for index, value in enumerate(node.state):
+            for newValue in range(1, len(node.state) + 1, 1):
+                if newValue != value:
+                    newState = node.state.copy()
+                    newState[index] = newValue
+                    newNode = Node(self, newState, node)
+                    successor_nodes.append(newNode)
         
-        return new_actions
+        return successor_nodes
     
-    def get_result(self, state, action):
-        return None
-    
-    def goal_test(self, state):
+    def goal_test(self, node):
         #0 means no queens are attacking each other
-        if self.get_heuristic_value == 0:
+        if self.get_heuristic_value(node) == 0:
             return True
         return False
 
-    def get_step_cost(self, state, action):
-        #action = the next state; should always be 1
-        if action:
-            return 1
-        else:
-            return 0
+    def get_step_cost(self):
+        return 1
     
     def get_heuristic_value(self, node):
         #For this problem, the number of "attacks" possible between queens
         total = 0
-        
+        for index, value in enumerate(node.state):
+            foundLeftRowHit = False
+            foundLeftUpDiagHit = False
+            foundLeftDownDiagHit = False
+            foundRightRowHit = False
+            foundRightUpDiagHit = False
+            foundRightDownDiagHit = False
+            leftUpDiag = value
+            leftDownDiag = value
+            rightUpDiag = value
+            rightDownDiag = value
+            for leftIndex in range(index - 1, -1, -1):
+                leftUpDiag = leftUpDiag + 1
+                leftDownDiag = leftDownDiag - 1
+                if value == node.state[leftIndex]:
+                    foundLeftRowHit = True
+                if leftUpDiag == node.state[leftIndex]:
+                    foundLeftUpDiagHit = True
+                if leftDownDiag == node.state[leftIndex]:
+                    foundLeftDownDiagHit = True
+            for rightIndex in range(index + 1, len(node.state), 1):    
+                rightUpDiag = rightUpDiag + 1
+                rightDownDiag = rightDownDiag - 1
+                if value == node.state[rightIndex]:
+                    foundRightRowHit = True
+                if rightUpDiag == node.state[rightIndex]:
+                    foundRightUpDiagHit = True
+                if rightDownDiag == node.state[rightIndex]:
+                    foundRightDownDiagHit = True
+            if foundLeftRowHit:
+                total = total + 1
+            if foundLeftUpDiagHit:
+                total = total + 1
+            if foundLeftDownDiagHit:
+                total = total + 1
+            if foundRightRowHit:
+                total = total + 1
+            if foundRightUpDiagHit:
+                total = total + 1
+            if foundRightDownDiagHit:
+                total = total + 1
         
         return total
    
