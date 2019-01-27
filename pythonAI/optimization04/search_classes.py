@@ -92,6 +92,7 @@ class EightQueensProblem(object):
     
     def get_heuristic_value(self, node):
         #For this problem, the number of "attacks" possible between queens
+        #NOTE - return negative, so the goal (0) is the largest possible value
         total = 0
         for index, value in enumerate(node.state):
             foundLeftRowHit = False
@@ -135,7 +136,8 @@ class EightQueensProblem(object):
             if foundRightDownDiagHit:
                 total = total + 1
         
-        return total
+        #need to return a "maximizing" heuristic
+        return 100 - total
    
     
 if __name__ == "__main__":

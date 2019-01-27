@@ -10,14 +10,14 @@ import math
 
 def simulated_annealing_search(problem, schedule):
     currentNode = problem.initial_node
-    for time in range (1, 2001, 1):
-        temp = schedule[time]
+    for key, value in schedule.items():
+        temp = value
         if temp == 0:
             return currentNode
         #randomly grab a next node
         allSuccessorNodes = problem.get_successors(currentNode)
         nextNode = random.choice(allSuccessorNodes)
-        changeInValue =  problem.get_heuristic_value(nextNode) - problem.get_heuristic_value(currentNode)
+        changeInValue = problem.get_heuristic_value(nextNode) - problem.get_heuristic_value(currentNode)
         if changeInValue > 0:
             currentNode = nextNode
         else:
@@ -31,11 +31,14 @@ def genetic_search(problem):
 
 
 #helper function to get a temperature map for simulated annealing
-#this isn't optimal, but...
+#this isn't optimal, but using this method
 def get_temperature_schedule():
     schedule = {}
-    for time in range(1, 2001, 1):
-        schedule[time] = 500 - (time / 4)
+    maxTemp = 5000;
+    maxTime = 100000
+    for time in range(1, maxTime, 1):
+        schedule[time] = maxTemp = maxTemp * 0.99
+    schedule[maxTime] = 0
     return schedule
 
 if __name__ == "__main__":

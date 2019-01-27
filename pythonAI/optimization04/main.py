@@ -12,8 +12,8 @@ from search_functions import genetic_search
 from search_functions import get_temperature_schedule
 
 tSchedule = get_temperature_schedule()
+
 qGraph = EightQueensProblem()
-print(qGraph)
 solutionNode = simulated_annealing_search(qGraph, tSchedule)
 print("annealing solution node")
 print(solutionNode)
