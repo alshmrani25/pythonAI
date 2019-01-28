@@ -58,9 +58,6 @@ class EightQueensProblem(object):
         random_initial_state = [1,2,3,4,5,6,7,8]
         shuffle(random_initial_state)
         
-        #temporary
-        random_initial_state = [8, 2, 4, 5, 1, 3, 6, 7]
-        
         self.initial_state = random_initial_state
         self.initial_node = Node(self, self.initial_state, None)
         
@@ -82,19 +79,18 @@ class EightQueensProblem(object):
         return successor_nodes
     
     def goal_test(self, node):
-        #0 means no queens are attacking each other
-        if self.get_heuristic_value(node) == 0:
+        #100 means no queens are attacking each other
+        if self.get_heuristic_value(node.state) == 100:
             return True
         return False
 
     def get_step_cost(self):
         return 1
     
-    def get_heuristic_value(self, node):
+    def get_heuristic_value(self, nodeState):
         #For this problem, the number of "attacks" possible between queens
-        #NOTE - return negative, so the goal (0) is the largest possible value
         total = 0
-        for index, value in enumerate(node.state):
+        for index, value in enumerate(nodeState):
             foundLeftRowHit = False
             foundLeftUpDiagHit = False
             foundLeftDownDiagHit = False
@@ -108,20 +104,20 @@ class EightQueensProblem(object):
             for leftIndex in range(index - 1, -1, -1):
                 leftUpDiag = leftUpDiag + 1
                 leftDownDiag = leftDownDiag - 1
-                if value == node.state[leftIndex]:
+                if value == nodeState[leftIndex]:
                     foundLeftRowHit = True
-                if leftUpDiag == node.state[leftIndex]:
+                if leftUpDiag == nodeState[leftIndex]:
                     foundLeftUpDiagHit = True
-                if leftDownDiag == node.state[leftIndex]:
+                if leftDownDiag == nodeState[leftIndex]:
                     foundLeftDownDiagHit = True
-            for rightIndex in range(index + 1, len(node.state), 1):    
+            for rightIndex in range(index + 1, len(nodeState), 1):    
                 rightUpDiag = rightUpDiag + 1
                 rightDownDiag = rightDownDiag - 1
-                if value == node.state[rightIndex]:
+                if value == nodeState[rightIndex]:
                     foundRightRowHit = True
-                if rightUpDiag == node.state[rightIndex]:
+                if rightUpDiag == nodeState[rightIndex]:
                     foundRightUpDiagHit = True
-                if rightDownDiag == node.state[rightIndex]:
+                if rightDownDiag == nodeState[rightIndex]:
                     foundRightDownDiagHit = True
             if foundLeftRowHit:
                 total = total + 1
