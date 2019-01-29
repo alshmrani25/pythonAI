@@ -26,24 +26,26 @@ def simulated_annealing_search(problem, schedule):
                 currentNode = nextNode
     
 #population is a set of tuples (careful), but needs to return list
-def genetic_algorithm(problem, population, max_iterations = 100):
+def genetic_algorithm(problem, population, max_iterations = 250000):
     for count in range(1, max_iterations):
         new_population = set() 
-        for i in range(1, len(population)):
+        for i in range(1, len(population) + 1):
             fitness_map = fitness_function(problem, population)
-            #added this to prevent self-reproduction
-            x = [1]
-            y = [1]
-            while sorted(x) == sorted(y):
+            #prevent identical parents
+            x = []
+            y = []
+            while sorted(x) == sorted(y) or len(x) < 1 or len(y) < 1:
                 x = random_fitness_selection(fitness_map)
                 y = random_fitness_selection(fitness_map)
-            child = reproduce(x, y)
-            if random.random() < 0.05:
-                child = mutate(child)
+            #added this to prevent identical children (which can't
+            #be added to the set)
+            child = []
+            while len(child) < 1 or tuple(child) in new_population:
+                child = reproduce(x, y)
+                if random.random() < 0.05:
+                    child = mutate(child)
             new_population.add(tuple(child))
         population = new_population
-        print(len(population))
-        print("count: ", count)
     #now return the best individual in the final population
     final_fitness_map = fitness_function(problem, population)
     return get_highest_fitness(final_fitness_map)
