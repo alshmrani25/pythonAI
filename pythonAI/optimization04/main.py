@@ -23,7 +23,7 @@ print(qGraph.get_heuristic_value(solutionNode.state))
 
 
 #This takes 50x the time of simulated annealing, and only gets a solution
-#80 to 90% as good!!!
+#90%-95% as good!!!
 """
 genGraph = EightQueensProblem()
 genPop = set()
