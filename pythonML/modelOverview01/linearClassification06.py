@@ -9,6 +9,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 import matplotlib.pyplot as plt
 import mglearn
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
 
 X, y = mglearn.datasets.make_forge()
 fig, axes = plt.subplots(1, 2, figsize=(10,3))
@@ -22,3 +24,15 @@ for model, ax in zip([LinearSVC(), LogisticRegression()], axes):
     ax.set_ylabel("Feature 1")
 
 axes[0].legend()
+
+#cancer test
+cancer = load_breast_cancer()
+Xc_train, Xc_test, yc_train, yc_test = train_test_split(cancer.data
+    , cancer.target, stratify=cancer.target, random_state=42)
+logreg = LogisticRegression().fit(Xc_train, yc_train)
+print("Cancer training set score: ", logreg.score(Xc_train, yc_train))
+print("Cancer testing set score: ", logreg.score(Xc_test, yc_test))
+
+logreg001 = LogisticRegression(C=0.01).fit(Xc_train, yc_train)
+print("Cancer training 0.01 set score: ", logreg001.score(Xc_train, yc_train))
+print("Cancer testing 0.01 set score: ", logreg001.score(Xc_test, yc_test))
