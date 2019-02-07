@@ -3,6 +3,13 @@
 Created on Sun Jan 20 12:18:46 2019
 
 @author: domje
+
+Lasso Linear Regression
+- also tries to get coeffients close to zero
+- some end up as 0 (and are ignored)
+- bad model unless you have very large number of features, and only expect some to be important
+
+
 """
 
 import mglearn

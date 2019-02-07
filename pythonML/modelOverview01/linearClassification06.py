@@ -3,6 +3,18 @@
 Created on Sat Feb  2 16:20:18 2019
 
 @author: domje
+
+Linear Classification models
+
+- best for binary classification (except Logistic regression)
+- parameter = C
+    - the higher, the less regulatization
+- better for higher dimensions
+- very fast and good for large data sets
+- good for sparse data and large # of features compared to samples
+- hard to understand coefficients
+- sometimes only feasible method for really large data sets
+
 """
 
 from sklearn.linear_model import LogisticRegression
@@ -21,7 +33,7 @@ for model, ax in zip([LinearSVC(), LogisticRegression()], axes):
     mglearn.discrete_scatter(X[:, 0], X[:,1], y, ax=ax)
     ax.set_title(clf.__class__.__name__)
     ax.set_xlabel("Feature 0")
-    ax.set_ylabel("Feature 1")
+    ax.set_ylabel("Feature 1")  
 
 axes[0].legend()
 

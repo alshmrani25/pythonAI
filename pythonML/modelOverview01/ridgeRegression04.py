@@ -5,6 +5,14 @@ Created on Sun Jan 20 11:54:33 2019
 @author: domje
 
 Ridge Regression, similar to OLS, but different coefficient calculation
+- tries to keep coefficients close to 0 
+- this is "regularization" (explicitly trying to avoid overfitting)
+- main parameter is alpha"
+    - defaults to 1.0, but no reason that's special
+    - increasing alpha moves slope towards 0
+    - tradeoff beween train-test scores
+    - as this example shows, you need to try different values
+
 
 """
 

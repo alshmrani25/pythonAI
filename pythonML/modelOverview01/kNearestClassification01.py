@@ -11,6 +11,14 @@ p. 32
 
 K Nearest Neighbors, Classification
 
+-NOT USED IN PRACTICE
+- simple because it only stores data
+- parameters = n of neighbors and manner of distance measurement (Euclidean is fine)
+    - the larger n is, the simpler the model, and vice versa
+- usually a good model to try first
+- usually need to preprocess data
+- bad with models with 100s of features; worse when those features hold many 0s
+
 """
 
 import mglearn

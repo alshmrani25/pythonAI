@@ -6,6 +6,9 @@ Created on Sun Jan 20 11:07:44 2019
 
 Linear Regression, Ordinary Least Squares (OLS)
 
+- creates line that minizmizes mean squarer error between predictions and target
+- OLS is the simplest (and not usually the best) unless you have lots of data
+
 """
 
 from sklearn.linear_model import LinearRegression
