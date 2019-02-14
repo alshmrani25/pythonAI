@@ -20,8 +20,8 @@ There is overlap between the two books.
 
 
 
-<em>"Many problems in the real, physical world are contingency problems. For
+__"Many problems in the real, physical world are contingency problems. For
 this reason, many people keep their eyes open while walking around
-or driving."</em>
+or driving."__
 
-    <strong>- Peter Norvig</strong>
+    **- Peter Norvig**
