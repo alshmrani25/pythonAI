@@ -24,4 +24,4 @@ There is overlap between the two books.
 this reason, many people keep their eyes open while walking around
 or driving."<em>
 
-    <strong>- Peter Norvig<strong>
+    <b>- Peter Norvig<b>
