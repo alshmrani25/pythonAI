@@ -98,9 +98,6 @@ def mutate(x, minValue = 1, maxValue = 8, randIncrement = 1):
     return x
     
 
-#the fitness function for the 8queen
-#fitness_function = lambda heuristic_value
-
 
 #helper function to get a temperature map for simulated annealing
 #this isn't optimal, but using this method
@@ -112,6 +109,20 @@ def get_temperature_schedule():
         schedule[time] = maxTemp = maxTemp * 0.99
     schedule[maxTime] = 0
     return schedule
+
+
+
+def and_or_graph_search(problem):
+    return or_search(problem.initial_state, problem, [])
+
+def or_search(state, problem, path):
+    return 0
+
+def and_search(state, problem, path):
+    return 0
+
+
+
 
 if __name__ == "__main__":
     print("This is a module for optimization functions.")

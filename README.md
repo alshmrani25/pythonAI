@@ -14,3 +14,14 @@ A Guide for Data Scientists, by Mueller and Guido (O'Reilly). This
 is a more up-to-date survey using Python.
 
 There is overlap between the two books.
+
+
+
+
+
+
+<em>"Many problems in the real, physical world are contingency problems. For
+this reason, many people keep their eyes open while walking around
+or driving."<em>
+
+    <strong>- Peter Norvig<strong>

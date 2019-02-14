@@ -15,9 +15,6 @@ NOTE - skikit-learn ONLY implements pre-pruning
 
 NOTE - using GraphViz app to view .DOT files
 
-
-
-
 """
 
 
