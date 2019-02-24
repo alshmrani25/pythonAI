@@ -8,6 +8,8 @@ Created on Sun Dec 23 15:42:28 2018
 
 from search_classes import EightQueensProblem
 from search_classes import VacuumWorldErratic
+from search_classes import VacuumWorldNoObservation
+
 from search_functions import simulated_annealing_search
 from search_functions import get_temperature_schedule
 from search_functions import genetic_algorithm
@@ -41,4 +43,8 @@ print(genGraph.get_heuristic_value(genList))
 
 vWorld = VacuumWorldErratic()
 solutionPath = and_or_graph_search(vWorld)
-print("final solution", solutionPath)
+print("Errratic vacuum final solution", solutionPath)
+
+oWorld = VacuumWorldNoObservation()
+solutionPathO = and_or_graph_search(oWorld)
+print("Nonobservable vacuum final solution", solutionPathO)
