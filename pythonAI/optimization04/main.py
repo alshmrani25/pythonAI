@@ -7,9 +7,11 @@ Created on Sun Dec 23 15:42:28 2018
 """
 
 from search_classes import EightQueensProblem
+from search_classes import VacuumWorldErratic
 from search_functions import simulated_annealing_search
 from search_functions import get_temperature_schedule
 from search_functions import genetic_algorithm
+from search_functions import and_or_graph_search
 
 
 tSchedule = get_temperature_schedule()
@@ -22,7 +24,7 @@ print(qGraph.get_heuristic_value(solutionNode.state))
 
 
 
-#This takes 50x the time of simulated annealing, and only gets a solution
+#This takes 500x the time of simulated annealing, and only gets a solution
 #90%-95% as good!!!
 """
 genGraph = EightQueensProblem()
@@ -37,3 +39,6 @@ print(genList)
 print(genGraph.get_heuristic_value(genList))
 """
 
+vWorld = VacuumWorldErratic()
+solutionPath = and_or_graph_search(vWorld)
+print("final solution", solutionPath)

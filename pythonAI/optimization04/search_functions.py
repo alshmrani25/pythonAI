@@ -111,15 +111,38 @@ def get_temperature_schedule():
     return schedule
 
 
-
+#nondeterministic search methods; "interwoven"
+#depth-first solution
 def and_or_graph_search(problem):
     return or_search(problem.initial_state, problem, [])
 
 def or_search(state, problem, path):
-    return 0
+    if problem.goal_test(state):
+        return []
+    #below means cycle found
+    if state in path:
+        return None
+    for action in problem.get_actions(state):
+        #NOTE - you MUST use the below method to create the tempPath or you'll
+        #get infinite recursion (you don't want to change the path at this point)
+        tempPath = path + [state, ]
+        plan = and_search(problem.get_results(state, action), problem, tempPath)
+        if plan is not None:
+            return [action, plan]
+    return None
 
-def and_search(state, problem, path):
-    return 0
+def and_search(states, problem, path):
+    #NOTE - pseudocode is VERY unclear, BUT it means to return a hash here
+    #using Python dictionary
+    plans = {}
+    for state in states:
+        plan = or_search(state, problem, path)
+        if plan is None:
+            return None
+        else:
+            plans[state] = plan
+    return plans
+            
 
 
 
